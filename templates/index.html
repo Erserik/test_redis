@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Redis Counter</title>
+</head>
+<body>
+    <h1 id="number">{{ number }}</h1>
+    <a href="{% url 'next_page' %}">Next Page</a>
+    <script>
+        const ws = new WebSocket('ws://' + window.location.host + '/ws/increment/');
+
+        ws.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+            document.getElementById('number').innerText = data.number;
+        };
+
+        ws.onopen = function() {
+            ws.send(JSON.stringify({ 'action': 'get' }));
+        };
+    </script>
+</body>
+</html>

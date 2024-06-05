@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Next Page</title>
+</head>
+<body>
+    <button onclick="increment()">Increment</button>
+    <a href="{% url 'index' %}">Back</a>
+    <script>
+        const ws = new WebSocket('ws://' + window.location.host + '/ws/increment/');
+
+        ws.onmessage = function(event) {
+            const data = JSON.parse(event.data);
+        };
+
+        function increment() {
+            ws.send(JSON.stringify({ 'action': 'increment' }));
+        }
+    </script>
+</body>
+</html>
