@@ -54,6 +54,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
 ]
+CORS_ALLOW_ALL_ORIGINS = True  # For development only, not recommended for production
 
 ROOT_URLCONF = 'test_redis.urls'
 
