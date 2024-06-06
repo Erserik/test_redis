@@ -4,8 +4,9 @@ services:
   db:
     image: redis:latest
     container_name: redis
+    command: ["redis-server", "--port", "6388"]
     ports:
-      - "6379:6379"
+      - "6388:6388"
     volumes:
       - redis-data:/data
 
@@ -21,7 +22,7 @@ services:
       - db
     environment:
       - REDIS_HOST=db
-      - REDIS_PORT=6379
+      - REDIS_PORT=6388
 
 volumes:
   redis-data:
