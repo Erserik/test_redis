@@ -1,6 +1,7 @@
 import json
 from channels.generic.websocket import WebsocketConsumer
-import redis
+from django.conf import settings
+from redis import Redis
 
 class IncrementConsumer(WebsocketConsumer):
     clients = []
@@ -17,12 +18,12 @@ class IncrementConsumer(WebsocketConsumer):
         text_data_json = json.loads(text_data)
         action = text_data_json.get('action')
 
+        r = Redis(host=settings.REDIS_HOST, port=settings.REDIS_PORT)  # Используйте настройки
+
         if action == 'increment':
-            r = redis.Redis()
             number = r.incr('number')
             self.broadcast_number(number)
         elif action == 'get':
-            r = redis.Redis()
             number = r.get('number')
             if number is None:
                 number = 0
@@ -34,7 +35,7 @@ class IncrementConsumer(WebsocketConsumer):
             }))
 
     def send_number(self):
-        r = redis.Redis()
+        r = Redis(host=settings.REDIS_HOST, port=settings.REDIS_PORT)  # Используйте настройки
         number = r.get('number')
         if number is None:
             number = 0

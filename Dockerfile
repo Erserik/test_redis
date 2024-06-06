@@ -15,4 +15,4 @@ RUN pip install -r requirements.txt
 EXPOSE 8001
 
 # Запускаем команду для старта сервера
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8001"]
+CMD ["daphne", "-b", "0.0.0.0", "-p", "8001", "test_redis.asgi:application"]

@@ -1,8 +1,9 @@
 from django.shortcuts import render
-import redis
+from django.conf import settings
+from redis import Redis
 
 def index(request):
-    r = redis.Redis()
+    r = Redis(host=settings.REDIS_HOST, port=settings.REDIS_PORT)  # Используйте настройки
     number = r.get('number')
     if number is None:
         number = 0
